@@ -1,0 +1,32 @@
+:root {
+    --color-bg: #f9f9f9;
+    --color-primary: #4a90e2;
+    --space-m: 16px;
+    background: var(--color-bg);
+  }
+  .task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .task-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    main {
+      flex-direction: column;
+    }
+  
+    .sidebar {
+      width: 100%;
+    }
+  }
+  .task-card {
+    transition: transform 0.3s ease;
+  }
+  
+  .task-card:hover {
+    transform: translateY(-3px);
+  }
