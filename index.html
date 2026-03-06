@@ -2,111 +2,53 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Lista de Tareas</title>
-
-<style>
-body{
-    font-family: Arial, sans-serif;
-    background:#f4f4f4;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-}
-
-.container{
-    background:white;
-    padding:20px;
-    border-radius:10px;
-    width:350px;
-    box-shadow:0 0 10px rgba(0,0,0,0.2);
-}
-
-h1{
-    text-align:center;
-}
-
-input, select, button{
-    width:100%;
-    padding:10px;
-    margin-top:10px;
-    border-radius:5px;
-    border:1px solid #ccc;
-}
-
-button{
-    background:#3498db;
-    color:white;
-    border:none;
-    cursor:pointer;
-}
-
-button:hover{
-    background:#2980b9;
-}
-
-ul{
-    list-style:none;
-    padding:0;
-    margin-top:20px;
-}
-
-li{
-    padding:10px;
-    margin-top:10px;
-    border-radius:5px;
-    color:white;
-}
-
-.baja{
-    background:#2ecc71;
-}
-
-.media{
-    background:#f39c12;
-}
-
-.alta{
-    background:#e74c3c;
-}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task App</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<div class="container">
-<h1>Mis Tareas</h1>
+<header>
+<h1>Gestor de Tareas</h1>
+</header>
 
-<input type="text" id="tarea" placeholder="Escribe una tarea">
+<main>
 
-<select id="prioridad">
-<option value="baja">Prioridad Baja</option>
-<option value="media">Prioridad Media</option>
-<option value="alta">Prioridad Alta</option>
-</select>
+<aside class="sidebar">
+<h2>Categorías</h2>
+<ul>
+<li>Trabajo</li>
+<li>Estudio</li>
+<li>Personal</li>
+</ul>
+</aside>
 
-<button onclick="agregarTarea()">Añadir tarea</button>
+<section class="task-container">
 
-<ul id="lista"></ul>
+<h2>Lista de tareas</h2>
+
+<div class="task-card alta">
+<span class="task-title">Terminar proyecto</span>
+<span class="task-category">Trabajo</span>
+<span class="badge">Alta</span>
 </div>
 
-<script>
-function agregarTarea(){
+<div class="task-card media">
+<span class="task-title">Estudiar HTML</span>
+<span class="task-category">Estudio</span>
+<span class="badge">Media</span>
+</div>
 
-    let texto = document.getElementById("tarea").value;
-    let prioridad = document.getElementById("prioridad").value;
+<div class="task-card baja">
+<span class="task-title">Ir al gimnasio</span>
+<span class="task-category">Personal</span>
+<span class="badge">Baja</span>
+</div>
 
-    if(texto === "") return;
+</section>
 
-    let li = document.createElement("li");
-    li.textContent = texto + " (" + prioridad + ")";
-    li.classList.add(prioridad);
-
-    document.getElementById("lista").appendChild(li);
-
-    document.getElementById("tarea").value="";
-}
-</script>
+</main>
 
 </body>
 </html>
