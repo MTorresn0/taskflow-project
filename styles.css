@@ -1,162 +1,61 @@
-:root {
+/* FORMULARIO */
 
---color-bg: #0f172a;
---color-panel: #1e293b;
---color-primary: #6366f1;
---color-text: #f1f5f9;
+.task-form{
 
---high: #ef4444;
---medium: #f59e0b;
---low: #22c55e;
-
---radius: 12px;
---spacing: 16px;
-
-font-family: "Segoe UI", sans-serif;
-
-}
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-background: var(--color-bg);
-color: var(--color-text);
-}
-
-/* HEADER */
-
-header{
-padding:20px;
-background: var(--color-panel);
-text-align:center;
-box-shadow:0 4px 10px rgba(0,0,0,0.3);
-}
-
-/* APP LAYOUT */
-
-.app{
-display:flex;
-min-height:90vh;
-}
-
-/* SIDEBAR */
-
-aside{
-width:250px;
-background:var(--color-panel);
-padding:var(--spacing);
-}
-
-aside h2{
-margin-bottom:10px;
-}
-
-aside ul{
-list-style:none;
-}
-
-aside li{
-padding:10px;
-border-radius:var(--radius);
-margin-bottom:8px;
-cursor:pointer;
-transition:0.3s;
-}
-
-aside li:hover{
-background:var(--color-primary);
-}
-
-aside .active{
-background:var(--color-primary);
-}
-
-/* MAIN */
-
-main{
-flex:1;
-padding:30px;
-}
-
-.tasks{
-display:flex;
-flex-direction:column;
-gap:15px;
-}
-
-/* TASK CARD */
-
-.task{
-display:flex;
-justify-content:space-between;
-align-items:center;
-
-background:var(--color-panel);
-padding:15px;
-
-border-radius:var(--radius);
-
-transition: all 0.3s ease;
-}
-
-.task:hover{
-transform:scale(1.03);
-box-shadow:0 8px 20px rgba(0,0,0,0.3);
-}
-
-.title{
-font-weight:600;
-}
-
-.category{
-opacity:0.8;
-}
-
-.badge{
-padding:5px 10px;
-border-radius:20px;
-font-size:12px;
-}
-
-/* PRIORIDADES */
-
-.high .badge{
-background:var(--high);
-}
-
-.medium .badge{
-background:var(--medium);
-}
-
-.low .badge{
-background:var(--low);
-}
-
-/* RESPONSIVE */
-
-@media(max-width:768px){
-
-.app{
-flex-direction:column;
-}
-
-aside{
-width:100%;
-display:flex;
-overflow-x:auto;
-}
-
-aside ul{
 display:flex;
 gap:10px;
+
+margin-bottom:25px;
+
 }
 
-aside li{
-white-space:nowrap;
+.task-form input,
+.task-form select{
+
+padding:10px;
+
+border-radius:8px;
+
+border:1px solid #ddd;
+
 }
+
+.task-form button{
+
+padding:10px 16px;
+
+background:#6366f1;
+
+color:white;
+
+border:none;
+
+border-radius:8px;
+
+cursor:pointer;
+
+}
+
+.task-form button:hover{
+
+opacity:0.9;
+
+}
+
+/* BOTON ELIMINAR */
+
+.delete{
+
+background:none;
+
+border:none;
+
+color:red;
+
+cursor:pointer;
+
+font-size:18px;
+
+margin-left:10px;
 
 }
