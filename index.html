@@ -1,33 +1,69 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>App de Tareas</title>
-  <link rel="stylesheet" href="styles.css">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaskFlow - Organizador</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-    <header>
-      <h1>Lista de Tareas</h1>
-    </header>
-  
-    <main>
-  
-      <aside class="sidebar">
-        
-      </aside>
-  
-      <section class="task-list">
-       
-        <article class="task-card">
-            <h2>Tarea 1</h2>
-            <span class="badge high">Alta</span>
-          </article>
-          
-      </section>
-  
-    </main>
-  
-  </body>
+<header>
+<h1>⚡ TaskFlow</h1>
+<p>Organiza tu día con estilo</p>
+</header>
+
+<div class="app">
+
+<aside>
+
+<h2>Categorías</h2>
+
+<ul>
+<li class="active">📋 Todas</li>
+<li>💼 Trabajo</li>
+<li>📚 Estudio</li>
+<li>🏠 Personal</li>
+</ul>
+
+</aside>
+
+<main>
+
+<section class="tasks">
+
+<h2>Mis Tareas</h2>
+
+<div class="task high">
+<span class="title">Preparar presentación</span>
+<span class="category">Trabajo</span>
+<span class="badge">Alta</span>
+</div>
+
+<div class="task medium">
+<span class="title">Estudiar CSS Grid</span>
+<span class="category">Estudio</span>
+<span class="badge">Media</span>
+</div>
+
+<div class="task low">
+<span class="title">Comprar comida</span>
+<span class="category">Personal</span>
+<span class="badge">Baja</span>
+</div>
+
+<div class="task high">
+<span class="title">Terminar proyecto web</span>
+<span class="category">Trabajo</span>
+<span class="badge">Alta</span>
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+</body>
+</html>
