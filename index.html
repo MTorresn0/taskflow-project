@@ -10,18 +10,22 @@
 <body>
 
 <header>
-<h1>Gestor</h1>
+<h1>Gestor de Tareas</h1>
 </header>
 
 <main>
 
 <aside class="sidebar">
+
 <h2>Categorías</h2>
-<ul>
-<li>Trabajo</li>
-<li>Estudio</li>
-<li>Personal</li>
-</ul>
+
+<ul id="categoryList"></ul>
+
+<div class="add-category">
+<input type="text" id="newCategory" placeholder="Nueva categoría">
+<button class="btn" onclick="addCategory()">+</button>
+</div>
+
 </aside>
 
 <section class="task-container">
@@ -30,25 +34,50 @@
 
 <div class="task-form">
 
-<input type="text" id="taskInput" placeholder="Escribe una tarea">
+<input type="text" id="taskInput" placeholder="Nombre de la tarea">
 
 <select id="prioritySelect">
-<option value="alta">Alta</option>
-<option value="media">Media</option>
-<option value="baja">Baja</option>
+<option value="3">Alta</option>
+<option value="2">Media</option>
+<option value="1">Baja</option>
 </select>
 
-<select id="categorySelect">
-<option>Trabajo</option>
-<option>Estudio</option>
-<option>Personal</option>
-</select>
+<select id="categorySelect"></select>
 
-<button onclick="addTask()">Añadir tarea</button>
+<div class="due-date-container">
+<label for="dueDate">Fecha de finalización:</label>
+<input type="date" id="dueDate">
+</div>
+
+<button class="btn" onclick="addTask()">Añadir tarea</button>
 
 </div>
 
 <h2>Lista de tareas</h2>
+
+<div class="filters">
+
+<button class="btn" onclick="sortTasks('name')">Nombre <span id="icon-name">⬍</span></button>
+<button class="btn" onclick="sortTasks('priority')">Prioridad <span id="icon-priority">⬍</span></button>
+<button class="btn" onclick="sortTasks('dueDate')">Finalización <span id="icon-dueDate">⬍</span></button>
+
+<div class="category-filter">
+
+<button class="btn" onclick="toggleCategoryMenu()">Filtrar categorías ▼</button>
+
+<div id="categoryMenu" class="menu"></div>
+
+</div>
+
+</div>
+
+<div class="task-header">
+<span>Nombre</span>
+<span>Prioridad</span>
+<span>Categoría</span>
+<span>Creación</span>
+<span>Finalización</span>
+</div>
 
 <div id="taskList"></div>
 
@@ -58,28 +87,180 @@
 
 <script>
 
+let tasks=[]
+let categories=["Trabajo","Estudio","Personal"]
+let activeCategories=[...categories]
+
+let sortState={
+name:null,
+priority:null,
+dueDate:null
+}
+
+function renderCategories(){
+
+const list=document.getElementById("categoryList")
+const select=document.getElementById("categorySelect")
+const menu=document.getElementById("categoryMenu")
+
+list.innerHTML=""
+select.innerHTML=""
+menu.innerHTML=""
+
+categories.forEach(cat=>{
+
+let li=document.createElement("li")
+li.textContent=cat
+list.appendChild(li)
+
+let option=document.createElement("option")
+option.textContent=cat
+select.appendChild(option)
+
+let label=document.createElement("label")
+let check=document.createElement("input")
+
+check.type="checkbox"
+check.checked=true
+
+check.onchange=()=>{
+if(check.checked){
+activeCategories.push(cat)
+}else{
+activeCategories=activeCategories.filter(c=>c!==cat)
+}
+renderTasks()
+}
+
+label.appendChild(check)
+label.append(cat)
+
+menu.appendChild(label)
+
+})
+
+}
+
+function addCategory(){
+
+const input=document.getElementById("newCategory")
+const name=input.value.trim()
+
+if(name==="") return
+
+categories.push(name)
+activeCategories.push(name)
+
+renderCategories()
+
+input.value=""
+
+}
+
 function addTask(){
 
-const text = document.getElementById("taskInput").value
-const priority = document.getElementById("prioritySelect").value
-const category = document.getElementById("categorySelect").value
+const name=document.getElementById("taskInput").value
+const priority=document.getElementById("prioritySelect").value
+const category=document.getElementById("categorySelect").value
+const dueDate=document.getElementById("dueDate").value
+const creationDate=new Date().toLocaleDateString()
 
-if(text.trim() === "") return
+if(name.trim()==="") return
 
-const task = document.createElement("div")
-task.classList.add("task-card", priority)
+tasks.push({
+name,
+priority,
+category,
+creationDate,
+dueDate
+})
 
-task.innerHTML = `
-<span class="task-title">${text}</span>
-<span class="task-category">${category}</span>
-<span class="badge">${priority}</span>
-`
-
-document.getElementById("taskList").appendChild(task)
+renderTasks()
 
 document.getElementById("taskInput").value=""
 
 }
+
+function renderTasks(){
+
+const list=document.getElementById("taskList")
+list.innerHTML=""
+
+tasks
+.filter(t=>activeCategories.includes(t.category))
+.forEach(t=>{
+
+let priorityText=["","Baja","Media","Alta"][t.priority]
+
+const div=document.createElement("div")
+
+div.className="task-card"
+
+div.innerHTML=`
+<span>${t.name}</span>
+<span>${priorityText}</span>
+<span>${t.category}</span>
+<span>${t.creationDate}</span>
+<span>${t.dueDate}</span>
+`
+
+list.appendChild(div)
+
+})
+
+}
+
+function sortTasks(type){
+
+let dir=sortState[type]==="asc"?"desc":"asc"
+sortState[type]=dir
+
+Object.keys(sortState).forEach(k=>{
+if(k!==type) sortState[k]=null
+})
+
+tasks.sort((a,b)=>{
+
+if(type==="name")
+return dir==="asc"?a.name.localeCompare(b.name):b.name.localeCompare(a.name)
+
+if(type==="priority")
+return dir==="asc"?a.priority-b.priority:b.priority-a.priority
+
+if(type==="dueDate")
+return dir==="asc"?new Date(a.dueDate)-new Date(b.dueDate):new Date(b.dueDate)-new Date(a.dueDate)
+
+})
+
+updateIcons()
+
+renderTasks()
+
+}
+
+function updateIcons(){
+
+["name","priority","dueDate"].forEach(k=>{
+
+let icon=document.getElementById("icon-"+k)
+
+if(sortState[k]==="asc") icon.textContent="▲"
+else if(sortState[k]==="desc") icon.textContent="▼"
+else icon.textContent="⬍"
+
+})
+
+}
+
+function toggleCategoryMenu(){
+
+let menu=document.getElementById("categoryMenu")
+
+menu.style.display=menu.style.display==="block"?"none":"block"
+
+}
+
+renderCategories()
 
 </script>
 
