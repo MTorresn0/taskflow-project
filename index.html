@@ -4,98 +4,63 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>TaskFlow</title>
-
+<title>TaskFlow - Organizador</title>
 <link rel="stylesheet" href="styles.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
 </head>
 
 <body>
 
-<header class="header">
-
-<div class="header-container">
-
-<h1>TaskFlow</h1>
-
-<button class="add-btn">+ Nueva tarea</button>
-
-</div>
-
+<header>
+<h1>⚡ TaskFlow</h1>
+<p>Organiza tu día con estilo</p>
 </header>
 
+<div class="app">
 
-<div class="container">
+<aside>
 
-<aside class="sidebar">
-
-<h3>Categorías</h3>
+<h2>Categorías</h2>
 
 <ul>
-
-<li class="active">Todas</li>
-<li>Trabajo</li>
-<li>Estudio</li>
-<li>Personal</li>
-
+<li class="active">📋 Todas</li>
+<li>💼 Trabajo</li>
+<li>📚 Estudio</li>
+<li>🏠 Personal</li>
 </ul>
 
 </aside>
 
-
-<main class="main">
+<main>
 
 <section class="tasks">
 
-<h2>Mis tareas</h2>
+<h2>Mis Tareas</h2>
 
-<div class="task high">
+<!-- FORMULARIO PARA CREAR TAREAS -->
 
-<div class="task-info">
-<h4>Preparar presentación</h4>
-<p>Trabajo</p>
-</div>
+<div class="task-form">
 
-<span class="badge high">Alta</span>
+<input type="text" id="taskInput" placeholder="Escribe una tarea...">
 
-</div>
+<select id="category">
+<option>Trabajo</option>
+<option>Estudio</option>
+<option>Personal</option>
+</select>
 
+<select id="priority">
+<option value="high">Alta</option>
+<option value="medium">Media</option>
+<option value="low">Baja</option>
+</select>
 
-<div class="task medium">
-
-<div class="task-info">
-<h4>Estudiar CSS Grid</h4>
-<p>Estudio</p>
-</div>
-
-<span class="badge medium">Media</span>
-
-</div>
-
-
-<div class="task low">
-
-<div class="task-info">
-<h4>Comprar comida</h4>
-<p>Personal</p>
-</div>
-
-<span class="badge low">Baja</span>
+<button onclick="addTask()">Añadir</button>
 
 </div>
 
+<!-- LISTA DE TAREAS -->
 
-<div class="task high">
-
-<div class="task-info">
-<h4>Terminar proyecto web</h4>
-<p>Trabajo</p>
-</div>
-
-<span class="badge high">Alta</span>
+<div id="taskList">
 
 </div>
 
@@ -105,6 +70,7 @@
 
 </div>
 
-</body>
+<script src="app.js"></script>
 
+</body>
 </html>
