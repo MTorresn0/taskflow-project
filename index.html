@@ -212,23 +212,23 @@ list.appendChild(div)
 
 function sortTasks(type){
 
-let dir=sortState[type]==="asc"?"desc":"asc"
-sortState[type]=dir
+    let dir=sortState[type]==="asc"?"desc":"asc"
+    sortState[type]=dir
 
-Object.keys(sortState).forEach(k=>{
-if(k!==type) sortState[k]=null
-})
+    Object.keys(sortState).forEach(k=>{
+    if(k!==type) sortState[k]=null
+    })
 
-tasks.sort((a,b)=>{
+    tasks.sort((a,b)=>{
 
-if(type==="name")
-return dir==="asc"?a.name.localeCompare(b.name):b.name.localeCompare(a.name)
+    if(type==="name")
+    return dir==="asc"?a.name.localeCompare(b.name):b.name.localeCompare(a.name)
 
-if(type==="priority")
-return dir==="asc"?a.priority-b.priority:b.priority-a.priority
+    if(type==="priority")
+    return dir==="asc"?a.priority-b.priority:b.priority-a.priority
 
-if(type==="dueDate")
-return dir==="asc"?new Date(a.dueDate)-new Date(b.dueDate):new Date(b.dueDate)-new Date(a.dueDate)
+    if(type==="dueDate")
+    return dir==="asc"?new Date(a.dueDate)-new Date(b.dueDate):new Date(b.dueDate)-new Date(a.dueDate)
 
 })
 
@@ -266,3 +266,7 @@ renderCategories()
 
 </body>
 </html>
+<header>
+  <h1>Gestor de Tareas</h1>
+  <button id="darkModeBtn" class="btn">🌙</button>
+</header>
