@@ -1,62 +1,102 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TaskFlow - Organizador</title>
+
+<title>TaskFlow</title>
+
 <link rel="stylesheet" href="styles.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
 
-<header>
-<h1>⚡ TaskFlow</h1>
-<p>Organiza tu día con estilo</p>
+<header class="header">
+
+<div class="header-container">
+
+<h1>TaskFlow</h1>
+
+<button class="add-btn">+ Nueva tarea</button>
+
+</div>
+
 </header>
 
-<div class="app">
 
-<aside>
+<div class="container">
 
-<h2>Categorías</h2>
+<aside class="sidebar">
+
+<h3>Categorías</h3>
 
 <ul>
-<li class="active">📋 Todas</li>
-<li>💼 Trabajo</li>
-<li>📚 Estudio</li>
-<li>🏠 Personal</li>
+
+<li class="active">Todas</li>
+<li>Trabajo</li>
+<li>Estudio</li>
+<li>Personal</li>
+
 </ul>
 
 </aside>
 
-<main>
+
+<main class="main">
 
 <section class="tasks">
 
-<h2>Mis Tareas</h2>
+<h2>Mis tareas</h2>
 
 <div class="task high">
-<span class="title">Preparar presentación</span>
-<span class="category">Trabajo</span>
-<span class="badge">Alta</span>
+
+<div class="task-info">
+<h4>Preparar presentación</h4>
+<p>Trabajo</p>
 </div>
+
+<span class="badge high">Alta</span>
+
+</div>
+
 
 <div class="task medium">
-<span class="title">Estudiar CSS Grid</span>
-<span class="category">Estudio</span>
-<span class="badge">Media</span>
+
+<div class="task-info">
+<h4>Estudiar CSS Grid</h4>
+<p>Estudio</p>
 </div>
+
+<span class="badge medium">Media</span>
+
+</div>
+
 
 <div class="task low">
-<span class="title">Comprar comida</span>
-<span class="category">Personal</span>
-<span class="badge">Baja</span>
+
+<div class="task-info">
+<h4>Comprar comida</h4>
+<p>Personal</p>
 </div>
 
+<span class="badge low">Baja</span>
+
+</div>
+
+
 <div class="task high">
-<span class="title">Terminar proyecto web</span>
-<span class="category">Trabajo</span>
-<span class="badge">Alta</span>
+
+<div class="task-info">
+<h4>Terminar proyecto web</h4>
+<p>Trabajo</p>
+</div>
+
+<span class="badge high">Alta</span>
+
 </div>
 
 </section>
@@ -66,4 +106,5 @@
 </div>
 
 </body>
+
 </html>
