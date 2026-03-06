@@ -1,76 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TaskFlow - Organizador</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Task Organizer</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
 <header>
-<h1>⚡ TaskFlow</h1>
-<p>Organiza tu día con estilo</p>
+  <h1>Task Organizer</h1>
 </header>
 
 <div class="app">
 
-<aside>
+  <aside class="sidebar">
+    <h2>Categorías</h2>
+    <ul>
+      <li>Trabajo</li>
+      <li>Personal</li>
+      <li>Estudio</li>
+    </ul>
+  </aside>
 
-<h2>Categorías</h2>
+  <main>
 
-<ul>
-<li class="active">📋 Todas</li>
-<li>💼 Trabajo</li>
-<li>📚 Estudio</li>
-<li>🏠 Personal</li>
-</ul>
+    <section class="tasks">
 
-</aside>
+      <div class="task-card high">
+        <span class="task-title">Terminar proyecto</span>
+        <span class="category">Trabajo</span>
+        <span class="priority">Alta</span>
+      </div>
 
-<main>
+      <div class="task-card medium">
+        <span class="task-title">Ir al gimnasio</span>
+        <span class="category">Personal</span>
+        <span class="priority">Media</span>
+      </div>
 
-<section class="tasks">
+      <div class="task-card low">
+        <span class="task-title">Estudiar CSS</span>
+        <span class="category">Estudio</span>
+        <span class="priority">Baja</span>
+      </div>
 
-<h2>Mis Tareas</h2>
+    </section>
 
-<!-- FORMULARIO PARA CREAR TAREAS -->
-
-<div class="task-form">
-
-<input type="text" id="taskInput" placeholder="Escribe una tarea...">
-
-<select id="category">
-<option>Trabajo</option>
-<option>Estudio</option>
-<option>Personal</option>
-</select>
-
-<select id="priority">
-<option value="high">Alta</option>
-<option value="medium">Media</option>
-<option value="low">Baja</option>
-</select>
-
-<button onclick="addTask()">Añadir</button>
+  </main>
 
 </div>
-
-<!-- LISTA DE TAREAS -->
-
-<div id="taskList">
-
-</div>
-
-</section>
-
-</main>
-
-</div>
-
-<script src="app.js"></script>
 
 </body>
 </html>
