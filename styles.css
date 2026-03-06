@@ -26,6 +26,21 @@ background:var(--primary);
 color:white;
 padding:var(--spacing);
 text-align:center;
+position:relative;
+}
+
+.theme-btn{
+position:absolute;
+right:20px;
+top:50%;
+transform:translateY(-50%);
+padding:6px 10px;
+border-radius:6px;
+border:none;
+background:white;
+color:var(--primary);
+cursor:pointer;
+font-weight:bold;
 }
 
 main{
@@ -53,8 +68,10 @@ margin-top:10px;
 
 .add-category input{
 flex:1;
-padding:6px;
-width:120px; /* campo más corto */
+width:120px;
+padding:8px;
+border-radius:6px;
+border:1px solid #ccc;
 }
 
 .add-category button{
@@ -178,4 +195,40 @@ border-right:none;
 border-bottom:1px solid #ddd;
 }
 
+}
+
+body.dark{
+
+--bg:#1e1f26;
+--text:#e4e4e4;
+
+}
+
+body.dark header{
+background:#2b2d3a;
+}
+
+body.dark .sidebar{
+background:#2a2c36;
+border-color:#444;
+}
+
+body.dark .task-card{
+background:#2a2c36;
+}
+
+body.dark .task-header{
+background:#3a3c4a;
+}
+
+body.dark .menu{
+background:#2a2c36;
+border-color:#444;
+}
+
+body.dark input,
+body.dark select{
+background:#1e1f26;
+color:#e4e4e4;
+border-color:#555;
 }

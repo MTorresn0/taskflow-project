@@ -11,6 +11,8 @@
 
 <header>
 <h1>Gestor de Tareas</h1>
+
+<button class="btn theme-btn" onclick="toggleTheme()">🌙</button>
 </header>
 
 <main>
@@ -260,13 +262,27 @@ menu.style.display=menu.style.display==="block"?"none":"block"
 
 }
 
+function toggleTheme(){
+
+document.body.classList.toggle("dark")
+
+}
+
+function detectSystemTheme(){
+
+const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+
+if(prefersDark){
+document.body.classList.add("dark")
+}
+
+}
+
+detectSystemTheme()
+
 renderCategories()
 
 </script>
 
 </body>
 </html>
-<header>
-  <h1>Gestor de Tareas</h1>
-  <button id="darkModeBtn" class="btn">🌙</button>
-</header>
