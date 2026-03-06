@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Task App</title>
+<title>Gestor de Tareas</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -26,29 +26,62 @@
 
 <section class="task-container">
 
+<h2>Añadir tarea</h2>
+
+<div class="task-form">
+
+<input type="text" id="taskInput" placeholder="Escribe una tarea">
+
+<select id="prioritySelect">
+<option value="alta">Alta</option>
+<option value="media">Media</option>
+<option value="baja">Baja</option>
+</select>
+
+<select id="categorySelect">
+<option>Trabajo</option>
+<option>Estudio</option>
+<option>Personal</option>
+</select>
+
+<button onclick="addTask()">Añadir tarea</button>
+
+</div>
+
 <h2>Lista de tareas</h2>
 
-<div class="task-card alta">
-<span class="task-title">Terminar proyecto</span>
-<span class="task-category">Trabajo</span>
-<span class="badge">Alta</span>
-</div>
-
-<div class="task-card media">
-<span class="task-title">Estudiar HTML</span>
-<span class="task-category">Estudio</span>
-<span class="badge">Media</span>
-</div>
-
-<div class="task-card baja">
-<span class="task-title">Ir al gimnasio</span>
-<span class="task-category">Personal</span>
-<span class="badge">Baja</span>
-</div>
+<div id="taskList"></div>
 
 </section>
 
 </main>
+
+<script>
+
+function addTask(){
+
+const text = document.getElementById("taskInput").value
+const priority = document.getElementById("prioritySelect").value
+const category = document.getElementById("categorySelect").value
+
+if(text.trim() === "") return
+
+const task = document.createElement("div")
+task.classList.add("task-card", priority)
+
+task.innerHTML = `
+<span class="task-title">${text}</span>
+<span class="task-category">${category}</span>
+<span class="badge">${priority}</span>
+`
+
+document.getElementById("taskList").appendChild(task)
+
+document.getElementById("taskInput").value=""
+
+}
+
+</script>
 
 </body>
 </html>
