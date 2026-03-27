@@ -1,288 +1,94 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gestor de Tareas</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
 </head>
-
-<body>
-
-<header>
-<h1>Gestor de Tareas</h1>
-
-<button class="btn theme-btn" onclick="toggleTheme()">🌙</button>
-</header>
-
-<main>
-
-<aside class="sidebar">
-
-<h2>Categorías</h2>
-
-<ul id="categoryList"></ul>
-
-<div class="add-category">
-<input type="text" id="newCategory" placeholder="Nueva categoría">
-<button class="btn" onclick="addCategory()">+</button>
-</div>
-
-</aside>
-
-<section class="task-container">
-
-<h2>Añadir tarea</h2>
-
-<div class="task-form">
-
-<input type="text" id="taskInput" placeholder="Nombre de la tarea">
-
-<select id="prioritySelect">
-<option value="3">Alta</option>
-<option value="2">Media</option>
-<option value="1">Baja</option>
-</select>
-
-<select id="categorySelect"></select>
-
-<div class="due-date-container">
-<label for="dueDate">Fecha de finalización:</label>
-<input type="date" id="dueDate">
-</div>
-
-<button class="btn" onclick="addTask()">Añadir tarea</button>
-
-</div>
-
-<h2>Lista de tareas</h2>
-
-<div class="filters">
-
-<button class="btn" onclick="sortTasks('name')">Nombre <span id="icon-name">⬍</span></button>
-<button class="btn" onclick="sortTasks('priority')">Prioridad <span id="icon-priority">⬍</span></button>
-<button class="btn" onclick="sortTasks('dueDate')">Finalización <span id="icon-dueDate">⬍</span></button>
-
-<div class="category-filter">
-
-<button class="btn" onclick="toggleCategoryMenu()">Filtrar categorías ▼</button>
-
-<div id="categoryMenu" class="menu"></div>
-
-</div>
-
-</div>
-
-<div class="task-header">
-<span>Nombre</span>
-<span>Prioridad</span>
-<span>Categoría</span>
-<span>Creación</span>
-<span>Finalización</span>
-</div>
-
-<div id="taskList"></div>
-
-</section>
-
-</main>
-
-<script>
-
-let tasks=[]
-let categories=["Trabajo","Estudio","Personal"]
-let activeCategories=[...categories]
-
-let sortState={
-name:null,
-priority:null,
-dueDate:null
-}
-
-function renderCategories(){
-
-const list=document.getElementById("categoryList")
-const select=document.getElementById("categorySelect")
-const menu=document.getElementById("categoryMenu")
-
-list.innerHTML=""
-select.innerHTML=""
-menu.innerHTML=""
-
-categories.forEach(cat=>{
-
-let li=document.createElement("li")
-li.textContent=cat
-list.appendChild(li)
-
-let option=document.createElement("option")
-option.textContent=cat
-select.appendChild(option)
-
-let label=document.createElement("label")
-let check=document.createElement("input")
-
-check.type="checkbox"
-check.checked=true
-
-check.onchange=()=>{
-if(check.checked){
-activeCategories.push(cat)
-}else{
-activeCategories=activeCategories.filter(c=>c!==cat)
-}
-renderTasks()
-}
-
-label.appendChild(check)
-label.append(cat)
-
-menu.appendChild(label)
-
-})
-
-}
-
-function addCategory(){
-
-const input=document.getElementById("newCategory")
-const name=input.value.trim()
-
-if(name==="") return
-
-categories.push(name)
-activeCategories.push(name)
-
-renderCategories()
-
-input.value=""
-
-}
-
-function addTask(){
-
-const name=document.getElementById("taskInput").value
-const priority=document.getElementById("prioritySelect").value
-const category=document.getElementById("categorySelect").value
-const dueDate=document.getElementById("dueDate").value
-const creationDate=new Date().toLocaleDateString()
-
-if(name.trim()==="") return
-
-tasks.push({
-name,
-priority,
-category,
-creationDate,
-dueDate
-})
-
-renderTasks()
-
-document.getElementById("taskInput").value=""
-
-}
-
-function renderTasks(){
-
-const list=document.getElementById("taskList")
-list.innerHTML=""
-
-tasks
-.filter(t=>activeCategories.includes(t.category))
-.forEach(t=>{
-
-let priorityText=["","Baja","Media","Alta"][t.priority]
-
-const div=document.createElement("div")
-
-div.className="task-card"
-
-div.innerHTML=`
-<span>${t.name}</span>
-<span>${priorityText}</span>
-<span>${t.category}</span>
-<span>${t.creationDate}</span>
-<span>${t.dueDate}</span>
-`
-
-list.appendChild(div)
-
-})
-
-}
-
-function sortTasks(type){
-
-    let dir=sortState[type]==="asc"?"desc":"asc"
-    sortState[type]=dir
-
-    Object.keys(sortState).forEach(k=>{
-    if(k!==type) sortState[k]=null
-    })
-
-    tasks.sort((a,b)=>{
-
-    if(type==="name")
-    return dir==="asc"?a.name.localeCompare(b.name):b.name.localeCompare(a.name)
-
-    if(type==="priority")
-    return dir==="asc"?a.priority-b.priority:b.priority-a.priority
-
-    if(type==="dueDate")
-    return dir==="asc"?new Date(a.dueDate)-new Date(b.dueDate):new Date(b.dueDate)-new Date(a.dueDate)
-
-})
-
-updateIcons()
-
-renderTasks()
-
-}
-
-function updateIcons(){
-
-["name","priority","dueDate"].forEach(k=>{
-
-let icon=document.getElementById("icon-"+k)
-
-if(sortState[k]==="asc") icon.textContent="▲"
-else if(sortState[k]==="desc") icon.textContent="▼"
-else icon.textContent="⬍"
-
-})
-
-}
-
-function toggleCategoryMenu(){
-
-let menu=document.getElementById("categoryMenu")
-
-menu.style.display=menu.style.display==="block"?"none":"block"
-
-}
-
-function toggleTheme(){
-
-document.body.classList.toggle("dark")
-
-}
-
-function detectSystemTheme(){
-
-const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-
-if(prefersDark){
-document.body.classList.add("dark")
-}
-
-}
-
-detectSystemTheme()
-
-renderCategories()
-
-</script>
-
+<body class="bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors min-h-screen flex flex-col">
+
+  <header class="bg-blue-600 dark:bg-blue-800 text-white p-4 flex justify-between items-center shadow-md">
+    <h1 class="text-2xl font-bold">TaskFlow</h1>
+    <button id="themeToggle" class="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition" aria-label="Cambiar tema">
+      🌙 / ☀️
+    </button>
+  </header>
+
+  <div class="flex flex-col md:flex-row flex-1">
+    <aside class="w-full md:w-64 bg-white dark:bg-gray-800 p-6 border-b md:border-r border-gray-200 dark:border-gray-700 shadow-sm md:order-first order-last">
+      <h2 class="text-xl font-bold mb-4">Estadísticas</h2>
+      <div class="space-y-4">
+        <div class="bg-blue-50 dark:bg-gray-700 p-4 rounded-lg">
+          <p class="text-sm text-gray-500 dark:text-gray-300">Total de tareas</p>
+          <p id="statTotal" class="text-3xl font-bold text-blue-600 dark:text-blue-400">0</p>
+        </div>
+        <div class="bg-green-50 dark:bg-gray-700 p-4 rounded-lg">
+          <p class="text-sm text-gray-500 dark:text-gray-300">Completadas</p>
+          <p id="statCompleted" class="text-3xl font-bold text-green-600 dark:text-green-400">0</p>
+        </div>
+        <div class="bg-yellow-50 dark:bg-gray-700 p-4 rounded-lg">
+          <p class="text-sm text-gray-500 dark:text-gray-300">Pendientes</p>
+          <p id="statPending" class="text-3xl font-bold text-yellow-600 dark:text-yellow-400">0</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="flex-1 p-6">
+      <section class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm mb-6">
+        <h2 class="text-xl font-bold mb-4">Añadir nueva tarea</h2>
+        <form id="taskForm" class="flex flex-col sm:flex-row gap-3">
+            <label for="taskInput" class="sr-only">Título de la tarea</label>
+            <input type="text" id="taskInput" placeholder="¿Qué necesitas hacer?" required
+                class="flex-1 p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-transparent focus:ring-2 focus:ring-blue-500 focus:outline-none dark:text-white min-h-[48px]">
+            
+            <select id="taskPriority" class="p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:text-white min-h-[48px]">
+                <option value="Baja">Prioridad: Baja</option>
+                <option value="Media">Prioridad: Media</option>
+                <option value="Alta">Prioridad: Alta</option>
+            </select>
+
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition min-h-[48px]">
+                Añadir
+            </button>
+        </form>
+      </section>
+
+      <section class="mb-6 flex flex-col sm:flex-row gap-4 justify-between items-center">
+        <div class="flex gap-2">
+          <button class="filter-btn active bg-blue-100 text-blue-700 dark:bg-gray-700 dark:text-white px-4 py-2 rounded-lg font-medium" data-filter="all">Todas</button>
+          <button class="filter-btn bg-white text-gray-600 dark:bg-gray-800 dark:text-gray-300 px-4 py-2 rounded-lg font-medium shadow-sm hover:bg-gray-50" data-filter="pending">Pendientes</button>
+          <button class="filter-btn bg-white text-gray-600 dark:bg-gray-800 dark:text-gray-300 px-4 py-2 rounded-lg font-medium shadow-sm hover:bg-gray-50" data-filter="completed">Completadas</button>
+        </div>
+        <div class="flex gap-2 w-full sm:w-auto">
+          <input type="text" id="searchInput" placeholder="Buscar tarea..." class="p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-transparent w-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+      </section>
+
+      <section>
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-bold">Lista de tareas</h2>
+          <div class="space-x-2">
+            <button id="markAllBtn" class="text-sm text-blue-600 dark:text-blue-400 hover:underline">Marcar todas completadas</button>
+            <span class="text-gray-300 dark:text-gray-600">|</span>
+            <button id="clearCompletedBtn" class="text-sm text-red-600 dark:text-red-400 hover:underline">Borrar completadas</button>
+          </div>
+        </div>
+        <ul id="taskList" class="space-y-3">
+          </ul>
+      </section>
+    </main>
+  </div>
+
+  <footer class="bg-white dark:bg-gray-800 text-center p-4 border-t border-gray-200 dark:border-gray-700 text-sm text-gray-500">
+    Proyecto TaskFlow - Creado para el Bootcamp
+  </footer>
+
+  <script src="app.js"></script>
 </body>
 </html>
